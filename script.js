@@ -1,34 +1,23 @@
 
 const APP_CONFIG = {
   version: "1.0.0",
-  apkPath: "downloads/twinlink.apk"
+  apkPath: "https://github.com/engadhamsayedhanafi-ctrl/vision/releases/download/v1.0.0/twinlink.apk",
+  fileSize: "50.4 MB"
 };
 
-document.getElementById("version").textContent = APP_CONFIG.version;
-
-const downloadButton = document.querySelector(".download-button");
+const version = document.getElementById("version");
 const fileSize = document.getElementById("fileSize");
 const downloadNote = document.getElementById("downloadNote");
+const downloadButton = document.querySelector(".download-button");
 
+// Set application information
+version.textContent = APP_CONFIG.version;
+fileSize.textContent = APP_CONFIG.fileSize;
+
+// Set the official APK download link
 downloadButton.href = APP_CONFIG.apkPath;
+downloadButton.removeAttribute("download");
+downloadButton.classList.remove("disabled");
 
-fetch(APP_CONFIG.apkPath, { method: "HEAD" })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error("APK not available");
-    }
-
-    const bytes = Number(response.headers.get("content-length"));
-
-    if (bytes > 0) {
-      fileSize.textContent = `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-    } else {
-      fileSize.textContent = "APK file";
-    }
-
-    downloadButton.classList.remove("disabled");
-  })
-  .catch(() => {
-    fileSize.textContent = "Release pending";
-    downloadNote.textContent = "The next official release will be available soon.";
-  });
+// Set download note
+downloadNote.textContent = "Official TWINLINK Android release";
